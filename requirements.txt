@@ -1,0 +1,9 @@
+
+SpeechRecognition
+gTTS 
+pyAudio
+pyttsx3
+pywhatkit
+wikipedia
+requests
+bs4
