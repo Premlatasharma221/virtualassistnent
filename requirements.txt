@@ -7,3 +7,6 @@ pywhatkit
 wikipedia
 requests
 bs4
+pyautogui
+pynput
+wolframalpha
