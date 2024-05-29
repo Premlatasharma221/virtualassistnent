@@ -7,8 +7,13 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import random
 import webbrowser
+import plyer
+from plyer import notification
+from pygame import mixer
+import speedtest
 
 
+## creating password
 for i in range(3):
     user_ip=input("Enter Password to open Jarvis : ")
     pw_file=open("pass.txt",'r')
@@ -21,7 +26,10 @@ for i in range(3):
         exit()
     elif(user_ip!=pw):
         print("Try again")
- 
+
+
+from Intro import play_gif
+play_gif
 
 
 
@@ -64,6 +72,123 @@ if __name__ == "__main__":
                 if "go to sleep" in query:
                     speak("Ok mam , You can me call anytime")
                     break 
+                ######################jarvis 2.0 ##############################
+                elif"change password" in query:
+                    speak("What's the new password")
+                    new_pw=input("ENter the new password : ")
+                    new_password=open("pass.txt","w")## w is used to erase the existing thing 
+                    new_password.write(new_pw)
+                    new_password.close()
+                    speak("Done ,mam")
+                    speak(f"Your new password is {new_pw}")
+                elif "schedule my day" in query:
+                    tasks = [] #Empty list 
+                    speak("Do you want to clear old tasks (Plz speak YES or NO)")
+                    query = takeCommand().lower()
+                    if "yes" in query:
+                        file = open("tasks.txt","w")
+                        file.write(f"")
+                        file.close()
+                        no_tasks = int(input("Enter the no. of tasks :- "))
+                        i = 0
+                        for i in range(no_tasks):
+                            tasks.append(input("Enter the task :- "))
+                            file = open("tasks.txt","a")
+                            file.write(f"{i}. {tasks[i]}\n")
+                            file.close()
+                    elif "no" in query:
+                        i = 0
+                        no_tasks = int(input("Enter the no. of tasks :- "))
+                        for i in range(no_tasks):
+                            tasks.append(input("Enter the task :- "))
+                            file = open("tasks.txt","a")
+                            file.write(f"{i}. {tasks[i]}\n")
+                            file.close() 
+               
+
+            
+                ## showing notification
+                elif "show my schedule" in query:
+                    file = open("tasks.txt","r")
+                    content = file.read()
+                    file.close()
+                    mixer.init()
+                    mixer.music.load("notification.wav")
+                    mixer.music.play()
+                    notification.notify(
+                        title = "My schedule :-",
+                        message = content,
+                        timeout = 15
+                        )
+                elif "open" in query:   #EASY METHOD
+                    query = query.replace("open","")
+                    query = query.replace("jarvis","")
+                    pyautogui.press("super")
+                    pyautogui.typewrite(query)
+                    pyautogui.sleep(2)
+                    pyautogui.press("enter")   
+
+                elif "internet speed" in query:
+                    
+                    wifi  = speedtest.Speedtest()
+                    upload_net = wifi.upload()/1048576         #Megabyte = 1024*1024 Bytes
+                    download_net = wifi.download()/1048576
+                    print("Wifi Upload Speed is", upload_net)
+                    print("Wifi download speed is ",download_net)
+                    speak(f"Wifi download speed is {download_net}")
+                    speak(f"Wifi Upload speed is {upload_net}")
+
+                elif "ipl score" in query:
+                    from plyer import notification  #pip install plyer
+                    import requests #pip install requests
+                    from bs4 import BeautifulSoup #pip install bs4
+                    url = "https://www.cricbuzz.com/"
+                    page = requests.get(url)
+                    soup = BeautifulSoup(page.text,"html.parser")
+                    teams = soup.find_all(class_ = "cb-ovr-flo cb-hmscg-tm-nm")
+                  
+                    team_scores = soup.find_all(class_ = "cb-ovr-flo")
+                    print("Teams", teams)
+                    print("Scores",team_scores)
+
+                    if len(teams)>=2 and len(team_scores)>=11:
+                        team1=teams[0].get_text()
+                        team2=teams[1].get_text()
+                        team1_score=team_scores[8].get_text()
+                        team2_score=team_scores[10].get_text()
+
+                        #print the results for verification
+                        print(f"{team1} : {team1_score}")
+                        print(f"{team2} : {team2_score}")
+
+                        # send notification
+                        notification.notify(
+                            title = "IPL SCORE :- ",
+                            message = f"{team1} : {team1_score}\n {team2} : {team2_score}",
+                            timeout = 15)
+                    else:
+                        print("Could not find the requrired number of team names or scores.")
+
+
+
+
+                              
+                              
+
+
+                   
+
+                   
+
+                    
+            
+                                   
+
+
+
+                
+
+                ###############################################################
                 elif "hello" in query:
                     speak("Hello mam, how are you ?")
                 elif "i am fine" in query:

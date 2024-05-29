@@ -10,3 +10,10 @@ bs4
 pyautogui
 pynput
 wolframalpha
+plyer
+pygame
+speedtest-cli
+tkinter
+PIL
+
+
