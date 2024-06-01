@@ -13,6 +13,8 @@ from pygame import mixer
 import speedtest
 
 
+
+
 ## creating password
 for i in range(3):
     user_ip=input("Enter Password to open Jarvis : ")
@@ -72,6 +74,8 @@ if __name__ == "__main__":
                 if "go to sleep" in query:
                     speak("Ok mam , You can me call anytime")
                     break 
+               
+                    
                 ######################jarvis 2.0 ##############################
                 elif"change password" in query:
                     speak("What's the new password")
@@ -120,6 +124,12 @@ if __name__ == "__main__":
                         message = content,
                         timeout = 15
                         )
+                
+                    
+
+
+
+
                 elif "open" in query:   #EASY METHOD
                     query = query.replace("open","")
                     query = query.replace("jarvis","")
@@ -170,23 +180,28 @@ if __name__ == "__main__":
                         print("Could not find the requrired number of team names or scores.")
 
 
-
-
-                              
-                              
-
-
-                   
-
-                   
-
-                    
-            
-                                   
-
-
-
+                elif "play a game" in query:
+                                    
+                                    
+                                    from game import game_play
+                                    game_play()
+                elif "screenshot" in query:
+                    ss=pyautogui.screenshot()    
+                    ss.save('ss.jpg')
+                elif "click my photo" in query:
+                    pyautogui.press("super")
+                    pyautogui.typewrite("camera")
+                    pyautogui.press("enter")
+                    pyautogui.sleep(2)
+                    speak("Smile")
+                    pyautogui.press("enter")
+                elif"translate" in query:
+                    from Transtors import translategl
+                    query = query.replace("jarvis","")
+                    query = query.replace("translate","")
+                    translategl(query)
                 
+                   
 
                 ###############################################################
                 elif "hello" in query:

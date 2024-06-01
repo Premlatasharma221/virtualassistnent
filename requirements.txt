@@ -13,7 +13,8 @@ wolframalpha
 plyer
 pygame
 speedtest-cli
-tkinter
-PIL
+googletrans
+
+
 
 
